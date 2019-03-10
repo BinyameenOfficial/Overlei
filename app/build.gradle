@@ -70,3 +70,8 @@ sceneform.asset('sampledata/models/lampPost/LampPost.obj',
         'default',
         'sampledata/models/lampPost/LampPost.sfa',
         'src/main/assets/LampPost')
+
+sceneform.asset('sampledata/models/chair/model.obj',
+        'default',
+        'sampledata/models/chair/model.sfa',
+        'src/main/assets/chair/model')
