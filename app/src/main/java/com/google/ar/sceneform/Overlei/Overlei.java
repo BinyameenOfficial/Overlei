@@ -66,6 +66,7 @@ public class Overlei extends AppCompatActivity {
             ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE))
                     .getDeviceConfigurationInfo()
                     .getGlEsVersion();
+
     if (Double.parseDouble(openGlVersionString) < MIN_OPENGL_VERSION) {
       Log.e(TAG, "Sceneform requires OpenGL ES 3.0 later");
       Toast.makeText(activity, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG)
