@@ -17,7 +17,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.google.ar.sceneform.Overlei"
+        applicationId "com.google.ar.sceneform.overlei"
 
         // Sceneform requires minSdkVersion >= 24.
         minSdkVersion 24
@@ -45,8 +45,15 @@ android {
 
 dependencies {
 
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    //support for constraint layout
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
     // Provides ArFragment, and other Sceneform UX resources:
-    implementation "com.google.ar.sceneform.ux:sceneform-ux:1.6.0"
+    implementation "com.google.ar.sceneform.ux:sceneform-ux:1.8.0"
 
     // Use the Sceneform UX Package built from the source files included in the sceneformux folder.
     //api project(":sceneformux")
@@ -76,3 +83,13 @@ sceneform.asset('sampledata/models/couch/model.obj',
         'default',
         'sampledata/models/couch/model.sfa',
         'src/main/assets/couch/model')
+
+sceneform.asset('sampledata/models/computerSet/Computer.obj',
+        'default',
+        'sampledata/models/computerSet/Computer.sfa',
+        'src/main/assets/computer/SetComputer')
+
+sceneform.asset('sampledata/models/town/model.obj',
+        'default',
+        'sampledata/models/town/model.sfa',
+        'src/main/assets/town/model')
