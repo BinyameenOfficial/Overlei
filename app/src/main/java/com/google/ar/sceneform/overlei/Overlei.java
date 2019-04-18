@@ -63,7 +63,7 @@ public class Overlei extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-//brings up hand and camera to scan environment
+    //brings up hand and camera to scan environment
     setContentView(R.layout.activity_ux);
 
     fragment = (ArFragment)
@@ -77,7 +77,6 @@ public class Overlei extends AppCompatActivity {
 
 
               //checking if the scene being detected is horizontal
-
               if (plane.getType() != Plane.Type.HORIZONTAL_UPWARD_FACING) {
                 return;
               }
@@ -91,35 +90,35 @@ public class Overlei extends AppCompatActivity {
 
   }
 
-//show the menu at the bottom (this works)
+    //show the menu at the bottom (this works)
 
   public void initializeGallary() {
 
     LinearLayout gallary = findViewById(R.id.gallery_layout);
 
-//create chair thumbnails/picturee
+    //create chair thumbnails/picturee
     ImageView chair = new ImageView(this);
     chair.setImageResource(R.drawable.chair_thumb);
     chair.setContentDescription("chair asset");
 
-//parsing the file, gives reference to object
+    //parsing the file, gives reference to object
     chair.setOnClickListener(view -> currentltySelectedObject =
             Uri.parse("chair/chair.sfb"));
     gallary.addView(chair);
 
-//create couch picture/icon
-//where im getting the image from
+    //create couch picture/icon
+    //where im getting the image from
     ImageView couch = new ImageView(this);
-//imageView resource
+    //imageView resource
     couch.setImageResource(R.drawable.couch_thumb);
-//attaching a description
+    //attaching a description
     couch.setContentDescription("couch asset");
-//setting onclick action to set the currentlySelectedObject
+    //setting onclick action to set the currentlySelectedObject
     couch.setOnClickListener(view -> currentltySelectedObject =
             Uri.parse("couch/model.sfb"));
     gallary.addView(couch);
 
-//lampPost picture/icon
+    //lampPost picture/icon
     ImageView lampPost = new ImageView(this);
     lampPost.setImageResource(R.drawable.lamp_thumb);
     lampPost.setContentDescription("lampPost asset");
@@ -159,7 +158,7 @@ public class Overlei extends AppCompatActivity {
 
 //make anchorNode parent of transformable
     transformableNode.setParent(anchorNode);
-//add node for interactiion
+//add node for interaction
     arFragment.getArSceneView().getScene().addChild(anchorNode);
 
     transformableNode.select();
