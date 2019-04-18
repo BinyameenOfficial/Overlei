@@ -103,7 +103,7 @@ public class Overlei extends AppCompatActivity {
 
     //parsing the file, gives reference to object
     chair.setOnClickListener(view -> currentltySelectedObject =
-            Uri.parse("chair/chair.sfb"));
+            Uri.parse("chair/model.sfb"));
     gallary.addView(chair);
 
     //create couch picture/icon
