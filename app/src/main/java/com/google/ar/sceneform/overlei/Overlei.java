@@ -23,115 +23,147 @@ import com.google.ar.sceneform.ux.ArFragment;
 /**
  * At this point i have installed the google sceneform plugin. This is whats going to help be able to work with 3D assets
  */
+//My imports
+
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Build.VERSION_CODES;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.google.ar.core.Anchor;
+import com.google.ar.core.HitResult;
+import com.google.ar.core.Plane;
+import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.sceneform.rendering.ModelRenderable;
+import com.google.ar.sceneform.rendering.Renderable;
+import com.google.ar.sceneform.samples.Overlei.R;
+import com.google.ar.sceneform.ux.ArFragment;
+import com.google.ar.sceneform.ux.TransformableNode;
+
+//At this point i have installed the google sceneform plugin. This is
+//whats going to help be able to work with 3D assets
+
+
 public class Overlei extends AppCompatActivity {
 
   private ArFragment fragment;
-  private String currentltySelectedObject;
+  private Uri currentltySelectedObject;
 
   @Override
-  protected void onCreate(Bundle savedInstanceState){
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    //brings up hand and camera to scan environment
+//brings up hand and camera to scan environment
     setContentView(R.layout.activity_ux);
 
-    fragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.sceneform_fragment);
+    fragment = (ArFragment)
+            getSupportFragmentManager().findFragmentById(R.id.sceneform_fragment);
 
     initializeGallary();
 
-    //printing selected object to dubug log
-    fragment.setOnTapArPlaneListener ((HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
 
-        Log.d("modelType", currentltySelectedObject);
-      }
+    fragment.setOnTapArPlaneListener((HitResult hitResult, Plane plane,
+                                      MotionEvent motionEvent) -> {
+
+
+              //checking if the scene being detected is horizontal
+
+              if (plane.getType() != Plane.Type.HORIZONTAL_UPWARD_FACING) {
+                return;
+              }
+
+              //creating anchor
+              Anchor anchor = hitResult.createAnchor();
+              placeObject(fragment, anchor, currentltySelectedObject);
+
+            }
     );
-
 
   }
 
-  public void initializeGallary(){
+//show the menu at the bottom (this works)
+
+  public void initializeGallary() {
 
     LinearLayout gallary = findViewById(R.id.gallery_layout);
 
-    //create chair thumbnails
+//create chair thumbnails/picturee
     ImageView chair = new ImageView(this);
     chair.setImageResource(R.drawable.chair_thumb);
     chair.setContentDescription("chair asset");
-    chair.setOnClickListener(view -> currentltySelectedObject = "chair");
+
+//parsing the file, gives reference to object
+    chair.setOnClickListener(view -> currentltySelectedObject =
+            Uri.parse("chair/chair.sfb"));
     gallary.addView(chair);
 
-    //create couch thumbnail
-    //where im getting the image from
+//create couch picture/icon
+//where im getting the image from
     ImageView couch = new ImageView(this);
-    //imageView resource
+//imageView resource
     couch.setImageResource(R.drawable.couch_thumb);
-    //attaching a description
+//attaching a description
     couch.setContentDescription("couch asset");
-    //setting onclick action to set the currentlySelectedObject
-    couch.setOnClickListener(view -> currentltySelectedObject = "couch");
+//setting onclick action to set the currentlySelectedObject
+    couch.setOnClickListener(view -> currentltySelectedObject =
+            Uri.parse("couch/model.sfb"));
     gallary.addView(couch);
 
-    //lampPost thubnail
+//lampPost picture/icon
     ImageView lampPost = new ImageView(this);
     lampPost.setImageResource(R.drawable.lamp_thumb);
     lampPost.setContentDescription("lampPost asset");
-    lampPost.setOnClickListener(view -> currentltySelectedObject="lampPost");
+    lampPost.setOnClickListener(view -> currentltySelectedObject =
+            Uri.parse("LampPost.sfb"));
     gallary.addView(lampPost);
   }
 
+//anchor is where im going to place the object takes into
+//this method also has 'build' call method called addNodeToScene, find
+//this method below
 
-  /**======================================COMMENTING STARTS HERE==================================================*/
-//  private static final String TAG = Overlei.class.getSimpleName();
-//  private static final double MIN_OPENGL_VERSION = 3.0;
-//
-//  private ArFragment arFragment;
-//  private ModelRenderable andyRenderable;
-//
-//  @Override
-//  @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
-//  // CompletableFuture requires api level 24
-//  // FutureReturnValueIgnored is not valid
-//  protected void onCreate(Bundle savedInstanceState) {
-//    super.onCreate(savedInstanceState);
-//
-//    if (!checkIsSupportedDeviceOrFinish(this)) {
-//      return;
-//    }
-//
-//    setContentView(R.layout.activity_ux);
-//    arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.sceneform_fragment);
-//
-//  }
-//
-//  /**
-//   * Returns false and displays an error message if Sceneform can not run, true if Sceneform can run
-//   * on this device.
-//   *
-//   * <p>Sceneform requires Android N on the device as well as OpenGL 3.0 capabilities.
-//   *
-//   * <p>Finishes the activity if Sceneform can not run
-//   */
-//  public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
-//    if (Build.VERSION.SDK_INT < VERSION_CODES.N) {
-//      Log.e(TAG, "Sceneform requires Android N or later");
-//      Toast.makeText(activity, "Sceneform requires Android N or later", Toast.LENGTH_LONG).show();
-//      activity.finish();
-//      return false;
-//    }
-//    String openGlVersionString =
-//            ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE))
-//                    .getDeviceConfigurationInfo()
-//                    .getGlEsVersion();
-//
-//    if (Double.parseDouble(openGlVersionString) < MIN_OPENGL_VERSION) {
-//      Log.e(TAG, "Sceneform requires OpenGL ES 3.0 later");
-//      Toast.makeText(activity, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG)
-//              .show();
-//      activity.finish();
-//      return false;
-//    }
-//    return true;
-//  }
+  private void placeObject(ArFragment arFragment, Anchor anchor, Uri model) {
+    ModelRenderable.builder().setSource(arFragment.getContext(),
+            model).build()
 
-  /**===============================================COMMENTING ENDS HERE==============================================*/
+            .thenAccept(renderable -> addNodeToScene(arFragment, anchor,
+                    renderable)).exceptionally((throwable -> {
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      builder.setMessage(throwable.getMessage()).setTitle("Error");
+
+      AlertDialog dialog = builder.create();
+      dialog.show();
+      return null;
+    }));
+  }
+
+
+  private void addNodeToScene(ArFragment arFragment, Anchor anchor,
+                              Renderable renderable) {
+//create an anchor node
+    AnchorNode anchorNode = new AnchorNode(anchor);
+//create transformable node
+    TransformableNode transformableNode = new
+            TransformableNode(arFragment.getTransformationSystem());
+    transformableNode.setRenderable(renderable);
+
+//make anchorNode parent of transformable
+    transformableNode.setParent(anchorNode);
+//add node for interactiion
+    arFragment.getArSceneView().getScene().addChild(anchorNode);
+
+    transformableNode.select();
+  }
+
 }
+
