@@ -95,3 +95,19 @@ sceneform.asset('sampledata/models/town/model.obj',
         'default',
         'sampledata/models/town/model.sfa',
         'src/main/assets/town/model')
+
+
+sceneform.asset('sampledata/models/ikeaCoffeeTable/model.obj',
+        'default',
+        'sampledata/models/ikeaCoffeeTable/model.sfa',
+        'src/main/assets/ikeaCoffeeTable/model')
+
+sceneform.asset('sampledata/models/woodenChair/WoodChair_01(1).obj',
+        'default',
+        'sampledata/models/woodenChair/WoodChair_01(1).sfa',
+        'src/main/assets/woodenChair/WoodChair_01(1)')
+
+sceneform.asset('sampledata/models/woodenTable/Table_Large_Rectangular_01.obj',
+        'default',
+        'sampledata/models/woodenTable/Table_Large_Rectangular_01.sfa',
+        'src/main/assets/woodenTable/Table_Large_Rectangular_01')

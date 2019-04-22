@@ -1,18 +1,11 @@
 
 package com.google.ar.sceneform.overlei;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
@@ -25,29 +18,12 @@ import com.google.ar.sceneform.ux.ArFragment;
  */
 //My imports
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.ar.core.Anchor;
-import com.google.ar.core.HitResult;
-import com.google.ar.core.Plane;
 import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
-import com.google.ar.sceneform.samples.Overlei.R;
-import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
 //At this point i have installed the google sceneform plugin. This is
@@ -76,17 +52,16 @@ public class Overlei extends AppCompatActivity {
                                       MotionEvent motionEvent) -> {
 
 
-              //checking if the scene being detected is horizontal
-              if (plane.getType() != Plane.Type.HORIZONTAL_UPWARD_FACING) {
-                return;
-              }
+      //checking if the scene being detected is horizontal
+      if (plane.getType() != Plane.Type.HORIZONTAL_UPWARD_FACING) {
+        return;
+      }
 
-              //creating anchor
-              Anchor anchor = hitResult.createAnchor();
-              placeObject(fragment, anchor, currentltySelectedObject);
+      //creating anchor
+      Anchor anchor = hitResult.createAnchor();
+      placeObject(fragment, anchor, currentltySelectedObject);
 
-            }
-    );
+    });
 
   }
 
@@ -94,37 +69,46 @@ public class Overlei extends AppCompatActivity {
 
   public void initializeGallary() {
 
-    LinearLayout gallary = findViewById(R.id.gallery_layout);
+    LinearLayout myMenu = findViewById(R.id.menu);
 
     //create chair thumbnails/picturee
     ImageView chair = new ImageView(this);
-    chair.setImageResource(R.drawable.chair_thumb);
+    chair.setImageResource(R.drawable.chair);
     chair.setContentDescription("chair asset");
 
     //parsing the file, gives reference to object
     chair.setOnClickListener(view -> currentltySelectedObject =
             Uri.parse("chair/model.sfb"));
-    gallary.addView(chair);
+    myMenu.addView(chair);
 
     //create couch picture/icon
     //where im getting the image from
     ImageView couch = new ImageView(this);
     //imageView resource
-    couch.setImageResource(R.drawable.couch_thumb);
+    couch.setImageResource(R.drawable.couch);
     //attaching a description
     couch.setContentDescription("couch asset");
     //setting onclick action to set the currentlySelectedObject
     couch.setOnClickListener(view -> currentltySelectedObject =
             Uri.parse("couch/model.sfb"));
-    gallary.addView(couch);
+    myMenu.addView(couch);
 
-    //lampPost picture/icon
-    ImageView lampPost = new ImageView(this);
-    lampPost.setImageResource(R.drawable.lamp_thumb);
-    lampPost.setContentDescription("lampPost asset");
-    lampPost.setOnClickListener(view -> currentltySelectedObject =
-            Uri.parse("LampPost.sfb"));
-    gallary.addView(lampPost);
+    ImageView ikeaCoffeeTable = new ImageView(this);
+    ikeaCoffeeTable.setImageResource(R.drawable.ikea_coffee_table);
+    ikeaCoffeeTable.setContentDescription("Ikea coffee table");
+    ikeaCoffeeTable.setOnClickListener(view -> currentltySelectedObject =
+            Uri.parse("ikeaCoffeeTable/model.sfb"));
+    myMenu.addView(ikeaCoffeeTable);
+
+
+    //Wooden table
+    ImageView woodenTable = new ImageView(this);
+    woodenTable.setImageResource(R.drawable.wooden_table);
+    woodenTable.setContentDescription("Ikea wooden table");
+    woodenTable.setOnClickListener(view -> currentltySelectedObject =
+            Uri.parse("woodenTable/Table_Large_Rectangular_01.sfb"));
+    myMenu.addView(woodenTable);
+
   }
 
 //anchor is where im going to place the object takes into
